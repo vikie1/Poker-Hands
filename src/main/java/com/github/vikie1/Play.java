@@ -1,15 +1,17 @@
-package come.github.vikie1;
+package com.github.vikie1;
 
-import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Play {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+    static final Player player1 = new Player("Player 1");
+    static final Player player2 = new Player("Player 2");
 
-    private void readPokerFile() throws IOException {
-        try (FileInputStream fileInputStream = new FileInputStream("poker.txt")) {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+    public static void main(String[] args) throws IOException {
+        try(Stream<String> hands = Files.lines(Paths.get("src/main/resources/poker.txt"))) {
+            hands.forEach(System.out::println);
         }
     }
 }
