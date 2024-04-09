@@ -1,10 +1,10 @@
 # Project Euler: Poker Hands
-This project is a solution to [problem 54: poker hands](https://projecteuler.net/problem=54) by project eula using Java
+This project is a solution to [problem 54: poker hands](https://projecteuler.net/problem=54) by project euler using Java
 and OOP code.
 
 ## Solution
 The project utilises 3 main classes :
-- Card -> Contains information about a card and methods to methods used to interact with a card
+- Card -> Contains information about a card and methods used to interact with a card
 - Player -> Contains utility methods for handling a hand and interacting with cards in a hand
 - Play -> Initialises the game and prints the winner after reading all lines in poker.txt file
 
@@ -21,3 +21,7 @@ While most of the technologies used are not new to me, the approach to OOP is a 
 For instance, instead of POJOs having getter and setter methods with util/service classes manipulating the data, classes
 have self-complete methods(with no interfaces) that do something with the data. The classes only expose methods that are
 required for interaction with other classes. Classes do not function as data stores rather as a node in the domain
+
+## Requirements/Running the project
+The project is a maven `v4` project with a pom.xml at the root of the directory. It can be ran from the cmd usin `mvn` 
+or imported into the ide. The project is targeted towards java 17.
