@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Player {
     private final List<Card> cards;
+    private Card winningCard = null;
     private int wins;
     private final String name;
 
@@ -53,6 +54,18 @@ public class Player {
         return name;
     }
 
+    /**
+     * @return Card - highest value card of the winning sequence
+     */
+    public Card getWinningCard() {
+        if (winningCard == null) return cards.get(cards.size() - 1);
+        return winningCard;
+    }
+
+    public void clearHand(){
+        cards.clear();
+        winningCard = null;
+    }
 
     private boolean hasRoyalFlush() {
         if (!cards.get(0).name().equals('T') || !cards.get(cards.size() - 1).name().equals('A')) return false; // A royal flush should begin with 10 and end with A
@@ -112,5 +125,75 @@ public class Player {
         }
 
         return similarCards;
+    }
+
+    HighestRank evalRank(){
+        if (hasRoyalFlush()) return HighestRank.ROYAL_FLUSH;
+
+        boolean straight = hasStraight();
+        boolean flush = hasFlush();
+        if (straight && flush) return HighestRank.STRAIGHT_FLUSH;
+
+        Map<Character, Integer> xOfAKind = xOfAKind();
+        if (xOfAKind.containsValue(4)) {
+            winningCard = cards.get(3); // if there's 4 of a kind then any card at index 1 - 4 is of same kind
+            return HighestRank.FOUR_OF_A_KIND;
+        }
+        if (xOfAKind.containsValue(3) && xOfAKind().containsValue(2)) {
+            for (char highChar: xOfAKind.keySet()) {
+                if (xOfAKind.get(highChar) == 3) {
+                    winningCard = new Card(highChar, 'S');
+                    break;
+                }
+            }
+            return HighestRank.FULL_HOUSE;
+        }
+
+        if (flush) return HighestRank.FLUSH;
+        if (straight) return HighestRank.STRAIGHT;
+
+        if (xOfAKind.containsValue(3)) {
+            winningCard = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
+            return HighestRank.THREE_OF_A_KIND;
+        }
+        if (xOfAKind.size() == 2 && xOfAKind.values().containsAll(List.of(2, 2))) {
+            Card firstPair = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
+            Card secondPair = new Card(new ArrayList<>(xOfAKind.keySet()).get(1), 'S');
+            int higherCard = firstPair.compareTo(secondPair);
+
+            switch (higherCard){
+                case 1 -> winningCard = firstPair;
+                case -1 -> winningCard = secondPair;
+            }
+            return HighestRank.TWO_PAIRS;
+        }
+        if (xOfAKind.containsValue(2)) {
+            winningCard = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
+            return HighestRank.A_PAIR;
+        }
+
+        else return HighestRank.HIGHEST_CARD;
+    }
+
+    enum HighestRank{
+        ROYAL_FLUSH(1),
+        STRAIGHT_FLUSH(2),
+        FOUR_OF_A_KIND(3),
+        FULL_HOUSE(4),
+        FLUSH(5),
+        STRAIGHT(6),
+        THREE_OF_A_KIND(7),
+        TWO_PAIRS(8),
+        A_PAIR(9),
+        HIGHEST_CARD(10);
+
+        private final int cardRank;
+        HighestRank(int cardRank) {
+           this.cardRank = cardRank;
+        }
+
+        public int getCardRank() {
+            return cardRank;
+        }
     }
 }
