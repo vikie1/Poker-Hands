@@ -75,7 +75,7 @@ public class Player {
                     .filter(Card::isRoyalCard)
                     .filter(card -> card.type().equals(cards.get(0).type())) // check for type similarity e.g All should be Clubs
                     .toList();
-            return cards.size() == flushCards.size(); //if the size of both strings is the same then it meas nothing was filtered hence a royal flush
+            return cards.size() == flushCards.size(); //if the size of both strings is the same then it means nothing was filtered hence a royal flush
         }
     }
 
@@ -89,7 +89,7 @@ public class Player {
             Character currentCard = cards.get(i).name();
             char expectedNextCard;
 
-            if (currentCard.equals('A') && i < cards.size() - 1) break; // if 'A' is not in the last index then it's not a flush
+            if (currentCard.equals('A') && i < cards.size() - 1) break; // if 'A' is not in the last index then it's not a straight
 
             if (Character.isDigit(currentCard) && !currentCard.equals('9')) expectedNextCard = (char) (currentCard + 1);
             else {
@@ -109,7 +109,7 @@ public class Player {
 
 
     private Map<Character, Integer> xOfAKind(){
-        int count = 1; // since a hand only have 5 cards, we can never get more than to different repeat kinds cards
+        int count = 1; // count the number of times a card was repeated
         char repeatedCard = cards.get(0).name();
         Map<Character, Integer> similarCards = new HashMap<>();
 
