@@ -62,23 +62,6 @@ public class Player {
         return xCardsOfAKind;
     }
 
-    /**
-     * Get winning card will check the card
-     * that is most likely to deliver a win in case of a tie in the current game state.
-     * For instance,
-     *  - in the first iteration, the highest tiebreaker (Highest card in a winning sequence) is used,
-     *  - in the second iteration; the second-Highest card is used e.t.c
-     *
-     * @param iteration integer starting from 1.
-     * @return Card - highest value card of the winning sequence
-     */
-    public Card getWinningCard(int iteration) {
-//        if (winningCards.isEmpty() || winningCards.size() - iteration < 0) return null;
-//        return winningCards.get(winningCards.size() - iteration);
-        return null;
-    }
-
-
     public void clearHand(){
         cards.clear();
         xCardsOfAKind.clear();
@@ -90,9 +73,9 @@ public class Player {
             List<Card> flushCards = cards
                     .parallelStream()
                     .filter(Card::isRoyalCard)
-                    .filter(card -> card.type().equals(cards.get(0).type())) // check for type similarity e.g All should be Clubs
+                    .filter(card -> card.type().equals(cards.get(0).type())) // check for type similarity e.g., All should be Clubs
                     .toList();
-            return cards.size() == flushCards.size(); //if the size of both strings is the same then it means nothing was filtered hence a royal flush
+            return cards.size() == flushCards.size(); //if the size of both strings is the same, then it means nothing was filtered hence a royal flush
         }
     }
 
@@ -106,7 +89,7 @@ public class Player {
             Character currentCard = cards.get(i).name();
             char expectedNextCard;
 
-            if (currentCard.equals('A') && i < cards.size() - 1) break; // if 'A' is not in the last index then it's not a straight
+            if (currentCard.equals('A') && i < cards.size() - 1) break; // if 'A' is not in the last index, then it's not a straight
 
             if (Character.isDigit(currentCard) && !currentCard.equals('9')) expectedNextCard = (char) (currentCard + 1);
             else {
