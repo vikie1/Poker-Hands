@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player {
     private final List<Card> cards;
-    private final Map<Integer, List<Card>> xCardsOfAKind; // if same cards exist, store them with their frequency as keys
+    private final Map<String, List<Card>> xCardsOfAKind; // if same cards exist, store them with their frequency as keys
     private int wins;
     private final String name;
 
@@ -59,7 +59,7 @@ public class Player {
         return name;
     }
 
-    public Map<Integer, List<Card>> getXCardsOfAKind() {
+    public Map<String, List<Card>> getXCardsOfAKind() {
         return xCardsOfAKind;
     }
 
@@ -110,37 +110,76 @@ public class Player {
 
 
     private void xOfAKind(){
-        int count = 1; // count the number of times a card was repeated
-        char repeatedCard = cards.get(0).name();
+        int count = 0; // count the number of times a card was repeated
+        Card repeatedCard = cards.get(0);
         Map<Character, Integer> similarCards = new HashMap<>();
 
-        for (int i = 1; i < cards.size(); i++) {
-            if (cards.get(i).name().equals(repeatedCard)) { // increment count if card is repeated
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).name().equals(repeatedCard.name())) { // increment count if card is repeated
                 count ++;
                 similarCards.put(cards.get(i).name(), count);
+
+                if (i == cards.size() - 1) {
+                    List<Card> similarCardsList = xCardsOfAKind.get(String.valueOf(count));
+                    if (similarCardsList == null) {
+                        similarCardsList = new ArrayList<>() {
+                            @Override
+                            public boolean add(Card card) {
+                                int index = Collections.binarySearch(this, card); // using binary search to determine the index
+                                if (index < 0) index = ~index;
+                                super.add(index, card);
+                                return true;
+                            }
+
+                            @Override
+                            public boolean addAll(Collection<? extends Card> c) {
+                                boolean index = super.addAll(c);
+                                this.sort(Comparator.naturalOrder());
+                                return index;
+                            }
+                        };
+                    }
+
+                    similarCardsList.add(cards.get(i));
+                    xCardsOfAKind.put(String.valueOf(count), similarCardsList); // track the last of repeated cards and their frequency
+                }
             }
             else {
-                List<Card> similarCardsList = xCardsOfAKind.get(count);
-                if (similarCardsList == null) similarCardsList = new ArrayList<>(){
-                    @Override
-                    public boolean add(Card card) {
-                        int index = Collections.binarySearch(this, card); // using binary search to determine the index
-                        if (index < 0) index = ~index;
-                        super.add(index, card);
-                        return true;
-                    }
+                List<Card> similarCardsList = xCardsOfAKind.get(String.valueOf(count));
+                if (similarCardsList == null) {
+                    similarCardsList = new ArrayList<>(){
+                        @Override
+                        public boolean add(Card card) {
+                            int index = Collections.binarySearch(this, card); // using binary search to determine the index
+                            if (index < 0) index = ~index;
+                            super.add(index, card);
+                            return true;
+                        }
 
-                    @Override
-                    public boolean addAll(Collection<? extends Card> c) {
-                        boolean index = super.addAll(c);
-                        this.sort(Comparator.naturalOrder());
-                        return index;
-                    }
-                };
-                similarCardsList.add(cards.get(i));
-                xCardsOfAKind.put(count, similarCardsList); // track the last of repeated cards and their frequency
+                        @Override
+                        public boolean addAll(Collection<? extends Card> c) {
+                            boolean index = super.addAll(c);
+                            this.sort(Comparator.naturalOrder());
+                            return index;
+                        }
+                    };
+                }
+//                if (i == 1) {
+//                    similarCardsList.add(cards.get(0));
+//                    similarCardsList.add(cards.get(i));
+//                } else
+                if (i == cards.size() - 1 && count == 1) {
+                    similarCardsList.add(cards.get(i));
+                } else if (i == cards.size() - 1) {
+                    List<Card> loneCardsList = xCardsOfAKind.get(String.valueOf(1));
+                    if (loneCardsList == null) loneCardsList = new ArrayList<>(List.of(cards.get(i)));
+                    else loneCardsList.add(cards.get(i));
+                    xCardsOfAKind.put(String.valueOf(1), loneCardsList);
+                }
+                similarCardsList.add(repeatedCard);
+                xCardsOfAKind.put(String.valueOf(count), similarCardsList); // track the last of repeated cards and their frequency
 
-                repeatedCard = cards.get(i).name();
+                repeatedCard = cards.get(i);
                 count = similarCards.getOrDefault(repeatedCard, 1);
             }
         }
@@ -154,16 +193,16 @@ public class Player {
         if (straight && flush) return HighestRank.STRAIGHT_FLUSH;
 
         xOfAKind();
-        if (xCardsOfAKind.containsKey(4)) return HighestRank.FOUR_OF_A_KIND;
+        if (xCardsOfAKind.containsKey(String.valueOf(4))) return HighestRank.FOUR_OF_A_KIND;
 
-        if (xCardsOfAKind.containsKey(3) && xCardsOfAKind.containsKey(2)) return HighestRank.FULL_HOUSE;
+        if (xCardsOfAKind.containsKey(String.valueOf(3)) && xCardsOfAKind.containsKey(String.valueOf(2))) return HighestRank.FULL_HOUSE;
 
         if (flush) return HighestRank.FLUSH;
         if (straight) return HighestRank.STRAIGHT;
 
-        if (xCardsOfAKind.containsKey(3)) return HighestRank.THREE_OF_A_KIND;
-        if (xCardsOfAKind.containsKey(2)) {
-            if (xCardsOfAKind.get(2).size() > 1) return HighestRank.TWO_PAIRS;
+        if (xCardsOfAKind.containsKey(String.valueOf(3))) return HighestRank.THREE_OF_A_KIND;
+        if (xCardsOfAKind.containsKey(String.valueOf(2))) {
+            if (xCardsOfAKind.get(String.valueOf(2)).size() > 1) return HighestRank.TWO_PAIRS;
             return HighestRank.A_PAIR;
         }
 
