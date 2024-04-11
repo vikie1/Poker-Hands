@@ -31,6 +31,7 @@ public class PlayTest {
         player2.addCard(new Card('5', 'C'));
         player2.addCard(new Card('A', 'H'));
 
+        Play.player1.setWins(0);
         Play.extractCardsFromLine(line);
         List<Card> expectedPlayer1Cards = player1.getCards();
         List<Card> expectedPlayer2Cards = player2.getCards();
@@ -45,6 +46,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testForHighestCard_playerWithAceShouldWin(){
         String line = "4D 6S AH 9H QC 3D 6D 7H TD QS";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1result = 1;
         int actualPlayer1result = Play.player1.getWins();
@@ -55,6 +57,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testForRoyalFlush_playerWithRoyalFlushShouldWin(){
         String line = "JD KD TD AD QD JD QD AH TD QS";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1result = 1;
         int actualPlayer1result = Play.player1.getWins();
@@ -65,6 +68,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testStraightFlush_playerWithStraightFlushShouldWin(){
         String line = "4H 7H 9H 6H 5H 7D 9S TH QS 8C";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1result = 1;
         int actualPlayer1result = Play.player1.getWins();
@@ -75,6 +79,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_test4OfAKind_playersWith4OfAKindWins(){
         String line = "3D 5H 3S 3C 3H AH TS KC 2S 9D";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1result = 1;
         int actualPlayer1result = Play.player1.getWins();
@@ -85,6 +90,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testForFlush_playerWithFlushShouldWin(){
         String line = "3D 6D 7D TD QD 5H 5C 6S 7S KD ";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1result = 1;
         int actualPlayer1result = Play.player1.getWins();
@@ -95,6 +101,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testForPairs_playerWithHighestValuePairShouldWin(){
         String line = "5H 5C 6S 7S KD 2C 3S 8S 8D TD";
+        Play.player2.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer2result = 1;
         int actualPlayer2result = Play.player2.getWins();
@@ -105,6 +112,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testFor2Pairs_playerWithHighestValuePairsShouldWin(){
         String line = "5H 5C 8S 3S 8D 7C 3S 8S 8D 3D";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1Result = 1;
         int actualPlayer1Result = Play.player1.getWins();
@@ -115,6 +123,7 @@ public class PlayTest {
     @Test
     void evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin(){
         String line = "5H 7C 8S 3S 8D 7D 5S 8S 8D 2D";
+        Play.player1.setWins(0);
         Play.evalLineWinner(line);
         int expectedPlayer1Result = 1;
         int actualPlayer1Result = Play.player1.getWins();

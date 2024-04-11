@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Player {
     private final List<Card> cards;
-    private final List<Card> sortedCardsList; // a sorted instance of a card list
     private final Map<Integer, List<Card>> xCardsOfAKind; // if same cards exist, store them with their frequency as keys
     private int wins;
     private final String name;
@@ -17,7 +16,7 @@ public class Player {
          * sorting cards is meant to make it easier to retrieve card ranks
          * and allow pairs to be stored adjacent to each other
          **/
-        sortedCardsList = new ArrayList<>(){
+        cards = new ArrayList<>(){
             @Override
             public boolean add(Card card) {
                 int index = Collections.binarySearch(this, card); // using binary search to determine the index
@@ -33,8 +32,6 @@ public class Player {
                 return index;
             }
         };
-
-        this.cards = sortedCardsList;
         this.xCardsOfAKind = new HashMap<>();
     }
 
@@ -52,6 +49,10 @@ public class Player {
 
     public int getWins() {
         return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 
     public String getName() {
@@ -120,7 +121,22 @@ public class Player {
             }
             else {
                 List<Card> similarCardsList = xCardsOfAKind.get(count);
-                if (similarCardsList == null) similarCardsList = sortedCardsList;
+                if (similarCardsList == null) similarCardsList = new ArrayList<>(){
+                    @Override
+                    public boolean add(Card card) {
+                        int index = Collections.binarySearch(this, card); // using binary search to determine the index
+                        if (index < 0) index = ~index;
+                        super.add(index, card);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean addAll(Collection<? extends Card> c) {
+                        boolean index = super.addAll(c);
+                        this.sort(Comparator.naturalOrder());
+                        return index;
+                    }
+                };
                 similarCardsList.add(cards.get(i));
                 xCardsOfAKind.put(count, similarCardsList); // track the last of repeated cards and their frequency
 

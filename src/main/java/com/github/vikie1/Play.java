@@ -25,7 +25,7 @@ public class Play {
                     individualCardValues[i].charAt(1)
             );
 
-            // first five cards belong to player 1, the rest to player 2
+            // the first five cards belong to player 1, the rest to player 2
             if (i < 5) player1.addCard(currentCard);
             else player2.addCard(currentCard);
         }

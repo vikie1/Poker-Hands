@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="361422ca-9bb0-40cf-a1f1-ab3067fcf4d0" name="Changes" comment="edit typos in comments">
+    <list default="true" id="361422ca-9bb0-40cf-a1f1-ab3067fcf4d0" name="Changes" comment="remove commented code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Play.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Play.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Player.java" afterDir="false" />
@@ -61,7 +61,9 @@
     "JUnit.CardTest.compareTo_testLowerCard_the7CardShouldBeLowerThanTheQCard.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_test4OfAKind_playersWith4OfAKindWins.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_testFor2Pairs_playerWithHighestValuePairsShouldWin.executor": "Run",
+    "JUnit.PlayTest.evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_testForFlush_playerWithFlushShouldWin.executor": "Run",
+    "JUnit.PlayTest.evalLineWinner_testForHighestCard_playerWithAceShouldWin.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_testForPairs_playerWithHighestValuePairShouldWin.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_testForRoyalFlush_playerWithRoyalFlushShouldWin.executor": "Run",
     "JUnit.PlayTest.evalLineWinner_testStraightFlush_playerWithStraightFlushShouldWin.executor": "Run",
@@ -90,7 +92,7 @@
       <command value="mvn package" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.PlayTest.evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin">
+  <component name="RunManager" selected="Application.Play">
     <configuration name="Play" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.github.vikie1.Play" />
       <module name="PokerHands" />
@@ -104,7 +106,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CardTest.compareTo_testForSameValueCard_theTHCardShouldHaveSameValueWithTheTDCard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PlayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerHands" />
       <extension name="coverage">
         <pattern>
@@ -113,25 +115,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.github.vikie1" />
-      <option name="MAIN_CLASS_NAME" value="com.github.vikie1.CardTest" />
-      <option name="METHOD_NAME" value="compareTo_testForSameValueCard_theTHCardShouldHaveSameValueWithTheTDCard" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CardTest.compareTo_testLowerCard_the7CardShouldBeLowerThanTheQCard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PokerHands" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.github.vikie1.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.github.vikie1" />
-      <option name="MAIN_CLASS_NAME" value="com.github.vikie1.CardTest" />
-      <option name="METHOD_NAME" value="compareTo_testLowerCard_the7CardShouldBeLowerThanTheQCard" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="com.github.vikie1.PlayTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -168,6 +153,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PlayTest.evalLineWinner_testForHighestCard_playerWithAceShouldWin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PokerHands" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.vikie1.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.vikie1" />
+      <option name="MAIN_CLASS_NAME" value="com.github.vikie1.PlayTest" />
+      <option name="METHOD_NAME" value="evalLineWinner_testForHighestCard_playerWithAceShouldWin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Poker Hands" />
       <method v="2">
@@ -183,11 +184,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Play" />
+        <item itemvalue="JUnit.PlayTest" />
+        <item itemvalue="JUnit.PlayTest.evalLineWinner_testForHighestCard_playerWithAceShouldWin" />
         <item itemvalue="JUnit.PlayTest.evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin" />
         <item itemvalue="JUnit.PlayTest.evalLineWinner_testFor2Pairs_playerWithHighestValuePairsShouldWin" />
-        <item itemvalue="Application.Play" />
-        <item itemvalue="JUnit.CardTest.compareTo_testLowerCard_the7CardShouldBeLowerThanTheQCard" />
-        <item itemvalue="JUnit.CardTest.compareTo_testForSameValueCard_theTHCardShouldHaveSameValueWithTheTDCard" />
       </list>
     </recent_temporary>
   </component>
@@ -224,13 +225,31 @@
       <option name="project" value="LOCAL" />
       <updated>1712747976973</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix bug in determining winner when the stronger pairs are equal">
+      <option name="closed" value="true" />
+      <created>1712846159203</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712846159203</updated>
+    </task>
+    <task id="LOCAL-00005" summary="remove commented code">
+      <option name="closed" value="true" />
+      <created>1712846219039</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712846219039</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add ide files" />
     <MESSAGE value="add readme file" />
     <MESSAGE value="edit typos in comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit typos in comments" />
+    <MESSAGE value="fix bug in determining winner when the stronger pairs are equal" />
+    <MESSAGE value="remove commented code" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove commented code" />
   </component>
 </project>
