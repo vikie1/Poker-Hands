@@ -101,4 +101,24 @@ public class PlayTest {
 
         assertEquals(expectedPlayer2result, actualPlayer2result, "Player with a higher value pair wins");
     }
+
+    @Test
+    void evalLineWinner_testFor2Pairs_playerWithHighestValuePairsShouldWin(){
+        String line = "5H 5C 8S 3S 8D 7C 3S 8S 8D 3D";
+        Play.evalLineWinner(line);
+        int expectedPlayer1Result = 1;
+        int actualPlayer1Result = Play.player1.getWins();
+
+        assertEquals(expectedPlayer1Result, actualPlayer1Result, "Player with a higher value pair wins");
+    }
+
+    @Test
+    void evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin(){
+        String line = "5H 7C 8S 3S 8D 7D 5S 8S 8D 2D";
+        Play.evalLineWinner(line);
+        int expectedPlayer1Result = 1;
+        int actualPlayer1Result = Play.player1.getWins();
+
+        assertEquals(expectedPlayer1Result, actualPlayer1Result, "Player with a higher value cards when pairs are equal wins");
+    }
 }

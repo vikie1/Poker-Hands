@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Player {
     private final List<Card> cards;
-    private Card winningCard = null;
+    private final List<Card> sortedCardsList; // a sorted instance of a card list
+    private final Map<Integer, List<Card>> xCardsOfAKind; // if same cards exist, store them with their frequency as keys
     private int wins;
     private final String name;
 
@@ -12,11 +13,11 @@ public class Player {
         this.name = name;
 
         /*
-         * Initialise the list and override the add method to sort app data added to it by default
+         * Initialise the list and override the add method to sort app data added to it by default,
          * sorting cards is meant to make it easier to retrieve card ranks
          * and allow pairs to be stored adjacent to each other
          **/
-        cards = new ArrayList<>(){
+        sortedCardsList = new ArrayList<>(){
             @Override
             public boolean add(Card card) {
                 int index = Collections.binarySearch(this, card); // using binary search to determine the index
@@ -32,6 +33,9 @@ public class Player {
                 return index;
             }
         };
+
+        this.cards = sortedCardsList;
+        this.xCardsOfAKind = new HashMap<>();
     }
 
     void incrementWins() {
@@ -54,17 +58,30 @@ public class Player {
         return name;
     }
 
+    public Map<Integer, List<Card>> getXCardsOfAKind() {
+        return xCardsOfAKind;
+    }
+
     /**
+     * Get winning card will check the card
+     * that is most likely to deliver a win in case of a tie in the current game state.
+     * For instance,
+     *  - in the first iteration, the highest tiebreaker (Highest card in a winning sequence) is used,
+     *  - in the second iteration; the second-Highest card is used e.t.c
+     *
+     * @param iteration integer starting from 1.
      * @return Card - highest value card of the winning sequence
      */
-    public Card getWinningCard() {
-        if (winningCard == null) return cards.get(cards.size() - 1);
-        return winningCard;
+    public Card getWinningCard(int iteration) {
+//        if (winningCards.isEmpty() || winningCards.size() - iteration < 0) return null;
+//        return winningCards.get(winningCards.size() - iteration);
+        return null;
     }
+
 
     public void clearHand(){
         cards.clear();
-        winningCard = null;
+        xCardsOfAKind.clear();
     }
 
     private boolean hasRoyalFlush() {
@@ -108,7 +125,7 @@ public class Player {
     }
 
 
-    private Map<Character, Integer> xOfAKind(){
+    private void xOfAKind(){
         int count = 1; // count the number of times a card was repeated
         char repeatedCard = cards.get(0).name();
         Map<Character, Integer> similarCards = new HashMap<>();
@@ -119,12 +136,15 @@ public class Player {
                 similarCards.put(cards.get(i).name(), count);
             }
             else {
+                List<Card> similarCardsList = xCardsOfAKind.get(count);
+                if (similarCardsList == null) similarCardsList = sortedCardsList;
+                similarCardsList.add(cards.get(i));
+                xCardsOfAKind.put(count, similarCardsList); // track the last of repeated cards and their frequency
+
                 repeatedCard = cards.get(i).name();
                 count = similarCards.getOrDefault(repeatedCard, 1);
             }
         }
-
-        return similarCards;
     }
 
     HighestRank evalRank(){
@@ -134,41 +154,17 @@ public class Player {
         boolean flush = hasFlush();
         if (straight && flush) return HighestRank.STRAIGHT_FLUSH;
 
-        Map<Character, Integer> xOfAKind = xOfAKind();
-        if (xOfAKind.containsValue(4)) {
-            winningCard = cards.get(3); // if there's 4 of a kind then any card at index 1 - 4 is of same kind
-            return HighestRank.FOUR_OF_A_KIND;
-        }
-        if (xOfAKind.containsValue(3) && xOfAKind().containsValue(2)) {
-            for (char highChar: xOfAKind.keySet()) {
-                if (xOfAKind.get(highChar) == 3) {
-                    winningCard = new Card(highChar, 'S');
-                    break;
-                }
-            }
-            return HighestRank.FULL_HOUSE;
-        }
+        xOfAKind();
+        if (xCardsOfAKind.containsKey(4)) return HighestRank.FOUR_OF_A_KIND;
+
+        if (xCardsOfAKind.containsKey(3) && xCardsOfAKind.containsKey(2)) return HighestRank.FULL_HOUSE;
 
         if (flush) return HighestRank.FLUSH;
         if (straight) return HighestRank.STRAIGHT;
 
-        if (xOfAKind.containsValue(3)) {
-            winningCard = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
-            return HighestRank.THREE_OF_A_KIND;
-        }
-        if (xOfAKind.size() == 2 && xOfAKind.values().containsAll(List.of(2, 2))) {
-            Card firstPair = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
-            Card secondPair = new Card(new ArrayList<>(xOfAKind.keySet()).get(1), 'S');
-            int higherCard = firstPair.compareTo(secondPair);
-
-            switch (higherCard){
-                case 1 -> winningCard = firstPair;
-                case -1 -> winningCard = secondPair;
-            }
-            return HighestRank.TWO_PAIRS;
-        }
-        if (xOfAKind.containsValue(2)) {
-            winningCard = new Card(new ArrayList<>(xOfAKind.keySet()).get(0), 'S');
+        if (xCardsOfAKind.containsKey(3)) return HighestRank.THREE_OF_A_KIND;
+        if (xCardsOfAKind.containsKey(2)) {
+            if (xCardsOfAKind.get(2).size() > 1) return HighestRank.TWO_PAIRS;
             return HighestRank.A_PAIR;
         }
 
