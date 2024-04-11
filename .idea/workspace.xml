@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="361422ca-9bb0-40cf-a1f1-ab3067fcf4d0" name="Changes" comment="update tests for fixed bug">
+    <list default="true" id="361422ca-9bb0-40cf-a1f1-ab3067fcf4d0" name="Changes" comment="fix for tests failing after the updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Play.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Play.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/vikie1/Player.java" afterDir="false" />
@@ -91,7 +91,7 @@
       <command value="mvn package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Play">
+  <component name="RunManager" selected="JUnit.PlayTest">
     <configuration name="Play" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.github.vikie1.Play" />
       <module name="PokerHands" />
@@ -183,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Play" />
         <item itemvalue="JUnit.PlayTest" />
+        <item itemvalue="Application.Play" />
         <item itemvalue="JUnit.PlayTest.evalLineWinner_testForHighestCard_playerWithAceShouldWin" />
         <item itemvalue="JUnit.PlayTest.evalLineWinner_testForAPair_playerWithHighestValueCardsInEqualPairShouldWin" />
         <item itemvalue="JUnit.PlayTest.evalLineWinner_testFor2Pairs_playerWithHighestValuePairsShouldWin" />
@@ -248,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712847697947</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix for tests failing after the updates">
+      <option name="closed" value="true" />
+      <created>1712852199122</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712852199122</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -258,6 +266,7 @@
     <MESSAGE value="fix bug in determining winner when the stronger pairs are equal" />
     <MESSAGE value="remove commented code" />
     <MESSAGE value="update tests for fixed bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="update tests for fixed bug" />
+    <MESSAGE value="fix for tests failing after the updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix for tests failing after the updates" />
   </component>
 </project>
